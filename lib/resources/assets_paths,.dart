@@ -2,6 +2,7 @@ const String absPath = "assets/images/";
 const String png = ".png";
 
 const String blankBall = "${absPath}blank_ball.png";
+const String blank = "${absPath}blank.png";
 
 const List<String> allAns = [
   "yes",

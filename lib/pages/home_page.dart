@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     double minSide = width < height ? width : height;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: blueGrey900,
+        backgroundColor: appColor,
         centerTitle: true,
         title: CommonText(
           data: "Magic 8 Ball",
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Expanded(child: ShakeScreen()),
+          child: ShakeScreen(),
         ),
       ),
     );

@@ -18,6 +18,7 @@ class _ShakeScreenState extends State<ShakeScreen>
   late Animation<double> _shakeAnimation;
   final player = AudioPlayer(); // 🎵 Audio Player instance
   String imagePath = blankBall;
+  bool isShaking = false;
 
   @override
   void initState() {
@@ -47,27 +48,37 @@ class _ShakeScreenState extends State<ShakeScreen>
   }
 
   void shakeBall() async {
-    _controller.duration = Duration(milliseconds: 100);
-    _controller.repeat(reverse: true);
+    if (!isShaking) {
+      isShaking = true;
+      _controller.duration = Duration(milliseconds: 100);
+      _controller.repeat(reverse: true);
 
-    try {
-      await player
-          .play(AssetSource(shakingNoice)); // ✅ No `assets/` prefix needed!
-    } catch (e) {
-      print("Error loading sound: $e"); // 🛠 Debugging info
+      try {
+        await player
+            .play(AssetSource(shakingNoice)); // ✅ No `assets/` prefix needed!
+      } catch (e) {
+        print("Error loading sound: $e"); // 🛠 Debugging info
+      }
+
+      Future.delayed(Duration(milliseconds: 900), () {
+        _controller.stop();
+        _controller.animateTo(0,
+            duration:
+                Duration(milliseconds: 100)); // 🔄 Smoothly return to center
+        String ans = allAns[Random().nextInt(allAns.length + 1)];
+        print("---------------------- $ans");
+        imagePath = absPath + ans + png;
+        setState(() {});
+        player.stop();
+        isShaking = false;
+      });
+    } else {
+      Future.delayed(Duration(seconds: 1)).then(
+        (value) {
+          isShaking = false;
+        },
+      );
     }
-
-    Future.delayed(Duration(milliseconds: 900), () {
-      _controller.stop();
-      _controller.animateTo(0,
-          duration:
-              Duration(milliseconds: 100)); // 🔄 Smoothly return to center
-      String ans = allAns[Random().nextInt(allAns.length + 1)];
-      print("---------------------- $ans");
-      imagePath = absPath + ans + png;
-      setState(() {});
-      player.stop();
-    });
   }
 
   @override
