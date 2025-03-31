@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_8_ball/resources/assets_paths,.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+
+import '../widgets/ball_maker.dart';
 
 class ShakeScreen extends StatefulWidget {
   @override
@@ -58,7 +62,9 @@ class _ShakeScreenState extends State<ShakeScreen>
       _controller.animateTo(0,
           duration:
               Duration(milliseconds: 100)); // 🔄 Smoothly return to center
-      imagePath = noBall;
+      String ans = allAns[Random().nextInt(allAns.length + 1)];
+      print("---------------------- $ans");
+      imagePath = absPath + ans + png;
       setState(() {});
       player.stop();
     });
@@ -76,8 +82,11 @@ class _ShakeScreenState extends State<ShakeScreen>
               child: child,
             );
           },
-          child:
-              GestureDetector(onTap: shakeBall, child: Image.asset(imagePath)),
+          child: GestureDetector(
+              onTap: shakeBall,
+              child: BallMaker(
+                label: imagePath,
+              )),
         ),
       ),
     );
