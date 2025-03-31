@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:insta_post/commons/common_spacing.dart';
-import 'package:insta_post/commons/common_text.dart';
+import 'package:magic_8_ball/commons/common_spacing.dart';
+import 'package:magic_8_ball/commons/common_text.dart';
 
 enum IconDirection { top, bottom, left, right }
 
